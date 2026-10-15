@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>此生宜居 CitySoul · 世界这么大, 哪座城市才真正适合你?</title>
+<meta name="description" content="30道生活方式选择题, 发现与你灵魂同频的中国城市与世界城市。">
+<link rel="stylesheet" href="css/styles.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='80' font-size='80'>🌍</text></svg>">
+</head>
+<body>
+
+<header class="topbar" id="topbar">
+  <button class="brand" data-nav="home" aria-label="返回首页">
+    <span class="brand-mark">◈</span> 此生宜居 <span class="brand-en">CitySoul</span>
+  </button>
+  <nav class="topnav">
+    <button data-nav="history">历史测试</button>
+    <button data-nav="compare">好友合拍</button>
+    <button data-nav="settings">设置</button>
+    <button class="btn btn-primary btn-sm" data-action="start-default">开始测试</button>
+  </nav>
+</header>
+
+<main id="app">
+
+<!-- ============ 首页 ============ -->
+<section id="screen-home" class="screen active">
+  <div class="hero">
+    <div class="hero-inner">
+      <p class="hero-eyebrow">城市人格匹配测试 · 娱乐探索向</p>
+      <h1 class="hero-title">你现在住的城市,<br>真的是你的<span class="hl">命定城市</span>吗?</h1>
+      <p class="hero-sub">30 道生活方式选择题, 发现与你灵魂同频的中国城市与世界城市。</p>
+      <div class="hero-cta">
+        <button class="btn btn-primary btn-lg" data-action="choose-mode">立即开启城市匹配</button>
+        <button class="btn btn-ghost btn-lg" data-nav="history">查看历史测试</button>
+      </div>
+      <div class="hero-facts">
+        <div><b>3–10 分钟</b><span>三种测试模式</span></div>
+        <div><b>12 维度</b><span>生活方式画像</span></div>
+        <div><b id="fact-cn">120+</b><span>中国城市样本</span></div>
+        <div><b id="fact-gl">180+</b><span>海外城市样本</span></div>
+      </div>
+      <p class="hero-note">国内 / 海外分别独立匹配 · 基础报告免费 · 深度报告可选 · 数据仅保存在你的浏览器</p>
+    </div>
+  </div>
+
+  <!-- 模式选择 -->
+  <div class="section" id="modes">
+    <h2 class="sec-title">选择你的测试方式</h2>
+    <div class="mode-grid">
+      <article class="mode-card">
+        <div class="mode-tag">速测</div>
+        <h3>3分钟心动速测</h3>
+        <p>12 道高区分度题目, 快速勾勒你的城市偏好, 适合碎片时间与社交分享。</p>
+        <button class="btn btn-outline" data-action="start" data-mode="quick">开始速测</button>
+      </article>
+      <article class="mode-card featured">
+        <div class="mode-tag">推荐</div>
+        <h3>8分钟深度探索</h3>
+        <p>30 题覆盖全部 12 个维度, 六段生活场景, 生成完整双城匹配报告。</p>
+        <button class="btn btn-primary" data-action="start" data-mode="deep">开始深度测试</button>
+      </article>
+      <article class="mode-card">
+        <div class="mode-tag">实用</div>
+        <h3>现实移居规划</h3>
+        <p>深度测试 + 预算、职业、家庭、语言等现实条件, 输出更落地的迁居参考。</p>
+        <button class="btn btn-outline" data-action="start" data-mode="reality">开始规划测试</button>
+      </article>
+    </div>
+    <p class="free-note">免费版包含: 全部题目、中国与海外第一匹配城市、基础人格画像与分享海报。深度排行榜与模拟工具为可选增值内容。</p>
+  </div>
+
+  <!-- 示例结果卡 -->
+  <div class="section">
+    <h2 class="sec-title">结果长这样</h2>
+    <div class="sample-row" id="sample-cards"></div>
+  </div>
+
+  <!-- 明信片墙 -->
+  <div class="section">
+    <h2 class="sec-title">城市明信片墙</h2>
+    <p class="sec-sub">每一座城市都不止一种人格 —— 翻转卡片看看它们的另一面。</p>
+    <div class="wall" id="postcard-wall"></div>
+  </div>
+
+  <!-- 地图光点 -->
+  <div class="section">
+    <h2 class="sec-title">样本覆盖</h2>
+    <p class="sec-sub">光点为数据库中的城市坐标(示意投影, 非精确地图)。</p>
+    <div class="map-wrap">
+      <canvas id="world-map" role="img" aria-label="世界城市样本分布光点图"></canvas>
+      <canvas id="cn-map" role="img" aria-label="中国城市样本分布光点图"></canvas>
+    </div>
+  </div>
+
+  <!-- FAQ -->
+  <div class="section">
+    <h2 class="sec-title">常见问题</h2>
+    <div class="faq">
+      <details><summary>测试结果科学吗?</summary><p>这是娱乐型生活方式探索工具, 不是心理学诊断。匹配基于你回答的偏好与结构化城市特征的加权距离计算, 城市特征中带有"编辑性评估"成分, 结果供自我探索与谈资, 不构成迁居、投资或签证建议。</p></details>
+      <details><summary>我的数据存在哪里?</summary><p>默认只保存在你自己浏览器的本地存储中, 不上传服务器、不需要手机号或真实姓名。你可以在设置页随时导出或彻底删除全部数据。</p></details>
+      <details><summary>为什么中国和海外城市分开排名?</summary><p>两类城市在成本、语言、便利性等维度上口径差异较大, 混合排名会失真。分别匹配后再以统一的 12 维画像呈现, 更有可比性。</p></details>
+      <details><summary>免费版和深度报告差在哪?</summary><p>免费版给出双城第一匹配与基础画像; 深度报告解锁双榜 TOP10、预算模拟、人生阶段模拟、现实挑战清单与更多海报模板。价格仅为待验证的定价假设。</p></details>
+      <details><summary>好友合拍会泄露我的答案吗?</summary><p>不会。结果码只包含 12 维画像分数、两个 TOP 城市 ID 与昵称, 不包含任何逐题答案。</p></details>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <p><button class="linklike" data-action="privacy">隐私说明</button> · 测试结果仅供娱乐与生活方式参考, 不构成专业心理评估、签证建议、投资建议或迁居保证。</p>
+    <p>© 2026 此生宜居 CitySoul · 数据版本 <span id="data-version">-</span></p>
+  </footer>
+</section>
+
+<!-- ============ 答题 ============ -->
+<section id="screen-quiz" class="screen">
+  <div class="quiz-shell">
+    <div class="quiz-head">
+      <button class="btn btn-ghost btn-sm" data-action="quiz-exit">暂存退出</button>
+      <div class="quiz-progress">
+        <div class="quiz-chapter" id="quiz-chapter">第一组 · 你的理想早晨</div>
+        <div class="progress-track"><div class="progress-fill" id="quiz-progress"></div></div>
+        <div class="quiz-count" id="quiz-count">1 / 30</div>
+      </div>
+    </div>
+    <div class="question-card" id="question-card" aria-live="polite"></div>
+    <div class="quiz-foot">
+      <button class="btn btn-ghost" id="btn-prev" data-action="prev">上一题</button>
+      <button class="btn btn-primary" id="btn-next" data-action="next" disabled>下一题</button>
+    </div>
+    <p class="quiz-hint">键盘操作: 数字/字母键选择, Enter 下一题, Backspace 上一题</p>
+  </div>
+</section>
+
+<!-- ============ 现实条件 ============ -->
+<section id="screen-constraints" class="screen">
+  <div class="panel narrow">
+    <h2>现实移居条件</h2>
+    <p class="muted">这些条件不会定义你的性格, 只用于对结果做现实约束与惩罚修正。</p>
+    <form id="constraints-form">
+      <label>每年可承受的生活成本(含房租)
+        <select name="budget">
+          <option value="30">8 万以内 (低成本)</option>
+          <option value="50" selected>8–15 万 (中等)</option>
+          <option value="70">15–30 万 (较宽裕)</option>
+          <option value="90">30 万以上 (基本不设限)</option>
+        </select>
+      </label>
+      <label>职业类型
+        <select name="occupation">
+          <option value="general">通用 / 不限行业</option>
+          <option value="tech">互联网 / 科技</option>
+          <option value="finance">金融 / 咨询</option>
+          <option value="culture">文化 / 创意 / 教育</option>
+          <option value="manufacture">制造 / 工程</option>
+          <option value="remote">自由职业 / 远程办公</option>
+        </select>
+      </label>
+      <label>家庭结构
+        <select name="family">
+          <option value="solo">独居 / 一人吃饱</option>
+          <option value="couple">两人世界</option>
+          <option value="kids">有孩子(或三年内计划)</option>
+        </select>
+      </label>
+      <label>外语适应能力
+        <select name="langWilling">
+          <option value="20">只能中文环境</option>
+          <option value="50">英语日常交流没问题</option>
+          <option value="80" selected>愿意学习一门新语言</option>
+        </select>
+      </label>
+      <label>现居城市(用于对照分析, 可留空)
+        <input type="text" name="currentCity" placeholder="例如: 上海" autocomplete="off">
+      </label>
+      <fieldset>
+        <legend>气候禁区(可多选)</legend>
+        <label class="check"><input type="checkbox" name="noCold"> 无法接受严寒冬季</label>
+        <label class="check"><input type="checkbox" name="noHeat"> 无法接受常年酷热</label>
+      </fieldset>
+      <label>迁居意愿
+        <select name="strictness">
+          <option value="0.3">纯属好奇, 随便看看</option>
+          <option value="0.7" selected>在认真考虑换城市</option>
+          <option value="1">计划两年内行动</option>
+        </select>
+      </label>
+      <button type="submit" class="btn btn-primary btn-lg btn-block">生成我的城市报告</button>
+    </form>
+  </div>
+</section>
+
+<!-- ============ 揭晓 ============ -->
+<section id="screen-reveal" class="screen">
+  <div class="reveal-stage">
+    <canvas id="reveal-canvas" aria-hidden="true"></canvas>
+    <div class="reveal-cards" id="reveal-cards" hidden></div>
+    <button class="btn btn-ghost btn-sm" id="reveal-skip" data-action="reveal-skip">跳过动画</button>
+  </div>
+</section>
+
+<!-- ============ 报告 ============ -->
+<section id="screen-report" class="screen">
+  <div id="report-root"></div>
+</section>
+
+<!-- ============ 历史 ============ -->
+<section id="screen-history" class="screen">
+  <div class="panel">
+    <h2>历史测试</h2>
+    <p class="muted">记录仅保存在本机浏览器。最多保留 50 条。</p>
+    <div id="history-list"></div>
+    <div class="row-gap">
+      <button class="btn btn-outline btn-sm" data-action="export-data">导出我的数据 (JSON)</button>
+      <button class="btn btn-danger btn-sm" data-action="clear-data">删除全部数据</button>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 合拍 ============ -->
+<section id="screen-compare" class="screen">
+  <div class="panel">
+    <h2>好友合拍 & 城市盲盒</h2>
+    <p class="muted">把你报告页的结果码发给朋友, 或在这里粘贴朋友的码。合拍与盲盒均需对方主动分享结果码, 码中不含逐题答案。</p>
+    <div class="compare-grid">
+      <div>
+        <h3>城市合拍测试</h3>
+        <textarea id="compare-code" rows="3" placeholder="粘贴朋友的结果码..."></textarea>
+        <div class="row-gap">
+          <button class="btn btn-primary btn-sm" data-action="do-compare" data-kind="soul">灵魂合拍度</button>
+          <button class="btn btn-outline btn-sm" data-action="do-compare" data-kind="roommate">理想室友匹配</button>
+        </div>
+      </div>
+      <div>
+        <h3>城市盲盒</h3>
+        <textarea id="blind-code" rows="3" placeholder="粘贴盲盒码, 先猜再揭晓..."></textarea>
+        <div class="row-gap">
+          <input type="text" id="blind-guess" placeholder="你猜 TA 的城市是?">
+          <button class="btn btn-primary btn-sm" data-action="blind-reveal">揭晓</button>
+        </div>
+      </div>
+    </div>
+    <div id="compare-result"></div>
+    <div id="my-code-box" class="my-code" hidden>
+      <h3>我的结果码</h3>
+      <p class="muted">完成一次测试后, 这里会显示你的结果码与盲盒码。</p>
+      <div id="my-codes"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 设置 ============ -->
+<section id="screen-settings" class="screen">
+  <div class="panel">
+    <h2>设置</h2>
+    <div class="setting-row">
+      <span>主题</span>
+      <div class="seg" id="seg-theme">
+        <button data-theme="light">浅色</button><button data-theme="dark">深色</button>
+      </div>
+    </div>
+    <div class="setting-row">
+      <span>动画效果</span>
+      <div class="seg" id="seg-motion">
+        <button data-motion="full">完整</button><button data-motion="reduced">减少动态</button>
+      </div>
+    </div>
+    <details class="weights-box">
+      <summary>高级: 自定义维度权重 (影响匹配计算)</summary>
+      <div id="weight-sliders"></div>
+      <button class="btn btn-outline btn-sm" data-action="reset-weights">恢复默认权重</button>
+    </details>
+
+    <h2 class="mt">深度报告 (演示定价)</h2>
+    <p class="muted">以下为可配置的价格假设, 当前为本地演示支付状态, 未接入真实支付与账户系统。</p>
+    <div class="product-grid" id="product-grid"></div>
+    <div class="redeem row-gap">
+      <input type="text" id="redeem-input" placeholder="兑换码 (演示: SOUL2026)">
+      <button class="btn btn-primary btn-sm" data-action="redeem">兑换</button>
+    </div>
+    <p class="muted" id="unlock-status"></p>
+
+    <h2 class="mt">隐私与数据</h2>
+    <p class="muted">测试数据默认仅存于本机浏览器 localStorage。不采集手机号、真实姓名、身份证、精确住址或收入证明。</p>
+    <div class="row-gap">
+      <button class="btn btn-outline btn-sm" data-action="export-data">导出我的数据</button>
+      <button class="btn btn-danger btn-sm" data-action="clear-data">删除全部本地数据</button>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- 弹层 -->
+<div class="modal" id="modal" hidden>
+  <div class="modal-card" role="dialog" aria-modal="true">
+    <button class="modal-close" data-action="modal-close" aria-label="关闭">×</button>
+    <div id="modal-body"></div>
+  </div>
+</div>
+<div class="toast" id="toast" hidden></div>
+
+<script src="js/data-cities-cn.js"></script>
+<script src="js/data-cities-global.js"></script>
+<script src="js/data-questions.js"></script>
+<script src="js/scoring.js"></script>
+<script src="js/reports.js"></script>
+<script src="js/poster.js"></script>
+<script src="js/storage.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
